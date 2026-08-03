@@ -1,0 +1,18 @@
+PatchS3Fpr2.efi performs one tightly bounded volatile-RAM modification before
+ExitBootServices. It never opens a filesystem and never accesses SPI flash.
+
+Algorithm:
+1. GetVariable("AcpiGlobalVariable", AF9FFD67-EC10-488A-9DFC-6CBF5EE22C2E).
+2. Read the live boot-script pointer at AcpiVariableSet+0x18.
+3. Parse entries to a valid 0xFF terminate marker (max 0x20000 bytes).
+4. Require exactly one parsed entry whose structured MEM_WRITE32 fields match
+   the documented target address and value. The entry index may vary between
+   cold boots.
+5. Change only byte +0x10 of that entry from 0x0C to 0x8C and verify the
+   structured post-write fields. On the measured boot this is script+0x8B2.
+
+Run in a UEFI shell before Windows, then start bootmgfw.efi without rebooting.
+At ExitBootServices BootScriptHideDxe/D6 snapshots the already patched copy.
+
+The .nsh file is intentionally separate from the .efi patcher. Review its fsN
+mapping before use. If the patcher returns nonzero it refuses to start Windows.
