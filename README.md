@@ -2,6 +2,7 @@
 
 > Experimental repair and interoperability research for one exact device
 > configuration. It can permanently brick the device.
+> It was figured out completely by OpenAI GPT 5.6 Ultra. 
 
 This project documents a narrowly scoped external-SPI patch that lets the EC
 keep the charging gate enabled after a non-HP USB-C PD source is identified.
