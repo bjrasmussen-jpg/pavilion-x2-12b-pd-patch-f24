@@ -1,0 +1,11 @@
+windows/output/
+*.bin
+*.log
+*.zip
+*.pdb
+FPTW64.exe
+fparts.txt
+Idrvdll32e.dll
+Pmxdll32e.dll
+setup_var.efi
+BOOTX64.EFI
